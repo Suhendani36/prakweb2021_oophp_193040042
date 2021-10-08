@@ -6,14 +6,21 @@ class Produk{
     public  $judul,  
             $penulis, 
             $penerbit;
+            
+    protected $diskon = 0;
 
-    protected $harga;
+    private $harga;
 
             public function __construct($judul = "judul", $penulis = "penulis", $penerbit = "penerbit", $harga = 0){
                 $this->judul = $judul;
                 $this->penulis = $penulis;
                 $this->penerbit = $penerbit;
                 $this->harga = $harga;
+            }
+
+
+            public function getHarga(){
+                return $this->harga - ( $this->harga * $this->diskon / 100);
             }
 
             public function getLabel(){
@@ -59,14 +66,16 @@ class Game extends Produk{
         $this->waktuMain = $waktuMain;
     }
 
+    public function setDiskon($diskon){
+        $this->diskon = $diskon;
+    }
+
     public function getInfoProduk(){
         $str = "Game :  " . parent::getInfoProduk() ." ~ {$this->waktuMain} Jam.";
         return $str;
     }
 
-    public function getHarga(){
-        return $this->harga;
-    }
+
 }
 class CetakInfoProduk {
     public function cetak( Produk $produk ) {
@@ -83,6 +92,8 @@ echo "<br>";
 echo $produk2->getInfoProduk();
 echo "<hr>";
 
+
+$produk2->setDiskon(50);
 echo $produk2->getHarga();
 
 
